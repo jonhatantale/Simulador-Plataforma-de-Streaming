@@ -4,11 +4,11 @@ Console.WriteLine("2. Mostrar reglas del sistema");
 Console.WriteLine("3. Mostrar estadisticas  de la sesión");
 Console.WriteLine("4. Reiniciar estadísticas");
 Console.WriteLine("5. Salir");
-int menu = int.Parse(Console.ReadLine());
+int menu;
 
 do
 {
-
+    menu = int.Parse(Console.ReadLine());
     switch (menu)
     {
         case 1:
@@ -18,7 +18,7 @@ do
             Console.WriteLine("Ingrese la duración en minutos");
             int duracion = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Ingrese la clasificación(todo publico, +13, +18)";
+            Console.WriteLine("Ingrese la clasificación(todo publico, +13, +18)");
             string clasificacion = Console.ReadLine();
 
             Console.WriteLine("Ingrese la hora programada para transmitir(0-23)");
@@ -26,15 +26,10 @@ do
 
             Console.WriteLine("Ingrese nivel de producción(bajo, medio, alto)");
             string produccion = Console.ReadLine();
-
-            /*if ()
-            {
-
-            }
-            */
+            
 
             break;
 
     }
 
-} while (menu != 0);
+} while (menu != 5);
