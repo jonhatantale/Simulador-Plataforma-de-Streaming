@@ -1,4 +1,6 @@
-﻿int menu;
+﻿using System;
+
+int menu;
 int TotalEvaluados = 0;
 int publicados = 0;
 int rechazados = 0;
@@ -13,8 +15,8 @@ do
 
     switch (menu)
     {
-        case 1: EvaluarContenido();
-            TotalEvaluados++;
+        case 1: EvaluarContenido(ref int publicados, ref int rechazados, ref int revision);
+            TotalEvaluados++; 
             break;
         case 2: MostrarReglas(); 
             break;
@@ -99,38 +101,65 @@ static void EvaluarContenido()
                     else
                     {
                         Console.WriteLine("Nivel de produccion no válido");
+                        rechazados ++;
                     }
 
                 }
                 else
                 {
                     Console.WriteLine("Horario de transmisión no válida");
+                    rechazados++;
                 }
             }
             else
             {
                 Console.WriteLine("Clasificación no válida");
+                rechazados++;
             }
 
         }
         else
         {
             Console.WriteLine("Duración inválida");
+            rechazados++;
         }
     }
     else
     {
         Console.WriteLine("Contenido inválido");
+        rechazados++;
     }
   
 }
 
 static void MostrarReglas()
 {
-
+    Console.WriteLine("");
+    Console.WriteLine("REGLAS DEL SISTEMA");
+    Console.WriteLine("1. Reglas de clasificación de horario.");
+    Console.WriteLine("Todo publico: Cualquier horario.");
+    Console.WriteLine("+13: Entre 6 y 22 horas (6 a.m. y 10 p.m.)");
+    Console.WriteLine("+18: Entre 22 y 5 horas (10 p.m. y 5 a.m.)");
+    Console.WriteLine("");
+    Console.WriteLine("2. Relgas de duración por tipo.");
+    Console.WriteLine("Película: 60 - 180 minutos.");
+    Console.WriteLine("Serie: 20 - 90 minutos.");
+    Console.WriteLine("Documental: 30 - 120 minutos");
+    Console.WriteLine("Evento en vivo: 30 - 240 minutos.");
+    Console.WriteLine("");
+    Console.WriteLine("ADVERTENCIA: Si el contenido no cumple el rango de duración \nel programa lo marcará como error de validación técnica");
+    Console.WriteLine("");
+    Console.WriteLine("3. Reglas de producción.");
+    Console.WriteLine("Producción baja: Es váldo solo para Todo público o +13.");
+    Console.WriteLine("Producción media o alta: Es válida para cualquier clasificación.");
+    Console.WriteLine("");
+    Console.WriteLine("SI EL CONTENIDO INFLINGE UNA REGLA AUTOMÁTICAMENTE ES RECHAZADO.");
+    Console.WriteLine("");
+    
 }
 
 static void MostrarEstadisticas(int evaluados)
 {
     Console.WriteLine("Cantidad de evaluaciones: " + evaluados);
 }
+
