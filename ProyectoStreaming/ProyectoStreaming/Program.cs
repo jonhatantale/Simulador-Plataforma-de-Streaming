@@ -185,6 +185,12 @@ class Program
             porcentajeAprob = (double)(publicados + revision) / TotalEvaluados * 100;
             Console.WriteLine("Porcentaje de aprobación: " + porcentajeAprob + "%\n");
         }
+        if (revision >= publicados && revision >= rechazados)
+            Console.WriteLine("Impacto predominante: Alto");
+        else if (publicados >= revision && publicados >= rechazados)
+            Console.WriteLine("Impacto predominante: Bajo/Medio");
+        else
+            Console.WriteLine("Impacto predominante: Rechazados");
     }
 
     static void ReiniciarEstadisticas()
@@ -196,5 +202,3 @@ class Program
         revision = 0;
     }
 }
-
-
