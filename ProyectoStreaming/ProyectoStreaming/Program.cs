@@ -1,5 +1,4 @@
 ﻿using System;
-
 class Program
 {
     static int menu;
@@ -9,7 +8,11 @@ class Program
     static int revision = 0;
     static string impacto;
     static double porcentajeAprob = 0;
-
+    static string contenidos;
+    static int duracion;
+    static string clasificacion;
+    static int horario;
+    static string produccion;
     static void Main()
     {
 
@@ -20,16 +23,25 @@ class Program
 
             switch (menu)
             {
-                case 1: EvaluarContenido();
+                case 1:
+                    EvaluarContenido();
                     TotalEvaluados++;
                     break;
-                case 2: MostrarReglas();
+                case 2:
+                    MostrarReglas();
                     break;
-                case 3: MostrarEstadisticas();
+                case 3:
+                    MostrarEstadisticas();
                     break;
-                case 4: ReiniciarEstadisticas();
+                case 4:
+                    ReiniciarEstadisticas();
                     break;
-                case 5: Console.WriteLine("Saliendo...");
+                case 5:
+                    Console.WriteLine("Saliendo...");
+                    MostrarEstadisticas();
+                    break;
+                default:
+                    Console.WriteLine("\nOpción inválida, vuelva a intentarlo\n");
                     break;
 
             }
@@ -49,98 +61,94 @@ class Program
 
     static void EvaluarContenido()
     {
-        string contenidos;
-        int duracion;
-        string clasificacion;
-        int transmision;
-        string produccion;
+
 
         Console.WriteLine("\nEVALUACIÓN DE CONTENIDOS");
         Console.WriteLine("Ingrese tipo de contenido(película, serie ,documental, evento en vivo)");
-        contenidos = Console.ReadLine();
-
-        if (contenidos == "pelicula" || contenidos == "serie" ||
-        contenidos == "documental" || contenidos == "evento en vivo")
+        contenidos = Console.ReadLine().ToLower().Trim();
+        while (contenidos != "pelicula" && contenidos != "serie" &&
+               contenidos != "documental" && contenidos != "evento en vivo")
         {
+            Console.WriteLine("\nContenido inválido, intente nuevamente\n");
+            contenidos = Console.ReadLine().ToLower().Trim(); 
+        }
 
-            Console.WriteLine("Ingrese la duración en minutos");
+        Console.WriteLine("\nIngrese la duración en minutos");
+        duracion = int.Parse(Console.ReadLine());
+        while (duracion < 1 || duracion >= 240)
+        {
+            Console.WriteLine("\nDuración inválida, intente de nuevo");
             duracion = int.Parse(Console.ReadLine());
+        }
 
-            if (duracion >= 20 && duracion <= 240)
-            {
-                Console.WriteLine("Ingrese la clasificación(todo publico, +13, +18)");
-                clasificacion = Console.ReadLine();
+        Console.WriteLine("\nIngrese la clasificación(todo publico, +13, +18)");
+        clasificacion = Console.ReadLine().ToLower().Trim();
+        while (clasificacion != "todo publico" && clasificacion != "+13" && clasificacion != "+18")
+        {
+            Console.WriteLine("\nContenido inválido, intentelo de nuevo");
+            clasificacion = Console.ReadLine().ToLower().Trim();
+        }
 
-                if (clasificacion == "todo publico" || clasificacion == "+13" || clasificacion == "+18")
-                {
+        Console.WriteLine("\nIngrese el horario de transmisión(0 - 23): ");
+        horario = int.Parse(Console.ReadLine());
+        while (horario < 0 || horario > 23)
+        {
+            Console.WriteLine("Horario Inválido, intente de nuevo");
+            horario = int.Parse(Console.ReadLine());
+        }
 
-                    Console.WriteLine("Ingrese la hora programada para transmitir(0-23)");
-                    transmision = int.Parse(Console.ReadLine());
+        Console.WriteLine("\nIngrese el nivel de producción(bajo, medio, alto)");
+        produccion = Console.ReadLine().ToLower().Trim();
+        while (produccion != "bajo" && produccion != "medio" && produccion != "alto")
+        {
+            Console.WriteLine("\nProducción inválida, intentelo de nuevo");
+            produccion = Console.ReadLine().ToLower().Trim();
+        }
 
-                    if ((clasificacion == "todo publico") || (clasificacion == "+13" && transmision >= 6 && transmision <= 22) ||
-                        (clasificacion == "+18" && (transmision >= 22 || transmision <= 5)))
-                    {
-                        Console.WriteLine("Ingrese nivel de producción(bajo, medio, alto)");
-                        produccion = Console.ReadLine();
+        if ((clasificacion == "+13" && (horario < 6 || horario > 22)) || 
+            (clasificacion == "+18" && (horario < 22 && horario > 5)))
+        {
+            Console.WriteLine("\nContenido rechazado por regla de clásificación y horario.");
+            Console.WriteLine("Consulte las reglas desde el menú principal.\n");
+            rechazados++;
+        }
+        else if ((contenidos == "pelicula" && (duracion < 60 || duracion > 180)) || (contenidos == "serie" && (duracion < 20 || duracion > 90)) || 
+        (contenidos == "documental" && (duracion < 30 || duracion > 120)) || (contenidos == "evento en vivo" && (duracion < 30 || duracion > 240)))
+        {
+            Console.WriteLine("\nContenido rechazado por regla de duración por tipo.");
+            Console.WriteLine("Consulte las reglas desde el menú principal.\n");
+            rechazados++;
+        }
+        else if (produccion == "bajo" && clasificacion == "+18")
+        {
+            Console.WriteLine("\nContenido rechazado por reglas de producción.");
+            Console.WriteLine("Consulte las reglas desde el menú principal.\n");
+            rechazados++;
+        }
+        else if (produccion == "alto" || duracion > 120 || (horario >= 20 && horario <= 23))
+        {
+            Console.WriteLine("\nIMPACTO ALTO");
+            Console.WriteLine("Enviar a Revisión\n");
+            revision++;
+        }
+        else if (produccion == "medio" || (duracion >= 60 && duracion <= 120))
+        {
+            Console.WriteLine("\nIMPACTO MEDIO");
+            Console.WriteLine("Publicar\n");
+            publicados++;
 
-                        if (produccion == "bajo" || produccion == "medio" || produccion == "alto")
-                        {
-                            if (produccion == "alto" || duracion > 120 || (transmision >= 20 && transmision <= 23))
-                            {
-                                Console.WriteLine("\nIMPACTO ALTO");
-                                Console.WriteLine("Enviar a Revisión\n");
-                                revision++;
-                            }
-                            else if (produccion == "medio" || (duracion >= 60 && duracion <= 120))
-                            {
-                                Console.WriteLine("\nIMPACTO MEDIO");
-                                Console.WriteLine("Publicar\n");
-                                publicados++;
-
-                            }
-                            else if (produccion == "bajo" && duracion < 60)
-                            {
-                                Console.WriteLine("\nIMPACTO BAJO");
-                                Console.WriteLine("Publicar\n");
-                                publicados++;
-                            }
-                            else
-                            {
-                                Console.WriteLine("\nPublicar con ajustes\n");
-                                publicados++;
-
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nNivel de produccion no válido\n");
-                            rechazados++;
-                        }
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nHorario de transmisión no válida\n");
-                        rechazados++;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("\nClasificación no válida\n");
-                    rechazados++;
-                }
-
-            }
-            else
-            {
-                Console.WriteLine("\nDuración inválida\n");
-                rechazados++;
-            }
+        }
+        else if (produccion == "bajo" && duracion < 60)
+        {
+            Console.WriteLine("\nIMPACTO BAJO");
+            Console.WriteLine("Publicar\n");
+            publicados++;
         }
         else
         {
-            Console.WriteLine("\nContenido inválido\n");
-            rechazados++;
+            Console.WriteLine("\nPublicar con ajustes\n");
+            publicados++;
+
         }
 
     }
@@ -171,7 +179,12 @@ class Program
         Console.WriteLine("Cantidad de evaluaciones: " + TotalEvaluados);
         Console.WriteLine("Cantidad de rechazados: " + rechazados);
         Console.WriteLine("Cantidad de publicados: " + publicados);
-        Console.WriteLine("Cantidad de enviados a revisión: " + revision + "\n");
+        Console.WriteLine("Cantidad de enviados a revisión: " + revision);
+        if (TotalEvaluados > 0)
+        {
+            porcentajeAprob = (double)(publicados + revision) / TotalEvaluados * 100;
+            Console.WriteLine("Porcentaje de aprobación: " + porcentajeAprob + "%\n");
+        }
     }
 
     static void ReiniciarEstadisticas()
@@ -182,7 +195,6 @@ class Program
         publicados = 0;
         revision = 0;
     }
-
 }
 
 
