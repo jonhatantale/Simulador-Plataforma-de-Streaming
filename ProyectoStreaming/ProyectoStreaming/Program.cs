@@ -195,7 +195,7 @@ class Program
 
     static void ReiniciarEstadisticas()
     {
-        Console.WriteLine("\nREINICIANDO ESTADÍSTICA....\n");
+        Console.WriteLine("\nREINICIANDO ESTADÍSTICA....\n ");
         TotalEvaluados = 0;
         rechazados = 0;
         publicados = 0;
