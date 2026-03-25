@@ -2,10 +2,10 @@
 class Program
 {
     static int menu;
-    static int TotalEvaluados = 22;
-    static int publicados = 13;
-    static int rechazados = 5;
-    static int revision = 4;
+    static int TotalEvaluados = 0;
+    static int publicados = 0;
+    static int rechazados = 0;
+    static int revision = 0;
     static string impacto;
     static double porcentajeAprob = 0;
     static string contenidos;
@@ -75,7 +75,7 @@ class Program
 
         Console.WriteLine("\nIngrese la duración en minutos");
         duracion = int.Parse(Console.ReadLine());
-        while (duracion < 1 || duracion >= 240)
+        while (duracion < 1 || duracion >= 241)
         {
             Console.WriteLine("\nDuración inválida, intente de nuevo");
             duracion = int.Parse(Console.ReadLine());
