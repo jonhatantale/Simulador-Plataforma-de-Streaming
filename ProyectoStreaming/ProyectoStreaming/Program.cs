@@ -1,6 +1,7 @@
 ﻿using System;
 class Program
 {
+
     static int menu;
     static int TotalEvaluados = 0;
     static int publicados = 0;
