@@ -2,10 +2,10 @@
 class Program
 {
     static int menu;
-    static int TotalEvaluados = 0;
-    static int publicados = 0;
-    static int rechazados = 0;
-    static int revision = 0;
+    static int TotalEvaluados = 22;
+    static int publicados = 13;
+    static int rechazados = 5;
+    static int revision = 4;
     static string impacto;
     static double porcentajeAprob = 0;
     static string contenidos;
@@ -182,15 +182,15 @@ class Program
         Console.WriteLine("Cantidad de enviados a revisión: " + revision);
         if (TotalEvaluados > 0)
         {
-            porcentajeAprob = (double)(publicados + revision) / TotalEvaluados * 100;
+            porcentajeAprob = (double)publicados / TotalEvaluados * 100;
             Console.WriteLine("Porcentaje de aprobación: " + porcentajeAprob + "%\n");
         }
         if (revision >= publicados && revision >= rechazados)
-            Console.WriteLine("Impacto predominante: Alto");
+            Console.WriteLine("Impacto predominante: Alto\n");
         else if (publicados >= revision && publicados >= rechazados)
-            Console.WriteLine("Impacto predominante: Bajo/Medio");
+            Console.WriteLine("Impacto predominante: Bajo/Medio\n");
         else
-            Console.WriteLine("Impacto predominante: Rechazados");
+            Console.WriteLine("Impacto predominante: Rechazados\n");
     }
 
     static void ReiniciarEstadisticas()
