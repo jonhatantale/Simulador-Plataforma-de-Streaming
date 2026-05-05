@@ -1,3 +1,3 @@
 ﻿using System;
 
-Console.WriteLine("Holas");
+Console.WriteLine("Hola");
